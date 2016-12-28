@@ -177,7 +177,7 @@ public class ThriftTask extends SourceTask {
         final String arguments = options.isEmpty() ? "" : ":" + join(",", options);
 
         command.add("--gen");
-        command.add(generator.getName() + arguments));
+        command.add(generator.getName() + arguments);
         for (final File include : this.include) {
             command.add("-I");
             command.add(include.getAbsolutePath());

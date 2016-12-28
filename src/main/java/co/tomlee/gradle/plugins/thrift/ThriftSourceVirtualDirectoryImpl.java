@@ -2,8 +2,7 @@ package co.tomlee.gradle.plugins.thrift;
 
 import groovy.lang.Closure;
 import org.gradle.api.file.SourceDirectorySet;
-import org.gradle.api.internal.file.DefaultSourceDirectorySet;
-import org.gradle.api.internal.file.FileResolver;
+import org.gradle.api.internal.file.SourceDirectorySetFactory;
 import org.gradle.util.ConfigureUtil;
 
 public class ThriftSourceVirtualDirectoryImpl implements ThriftSourceVirtualDirectory {
@@ -11,9 +10,9 @@ public class ThriftSourceVirtualDirectoryImpl implements ThriftSourceVirtualDire
 
     private final SourceDirectorySet thrift;
 
-    public ThriftSourceVirtualDirectoryImpl(String parentDisplayName, FileResolver fileResolver) {
+    public ThriftSourceVirtualDirectoryImpl(String parentDisplayName, SourceDirectorySetFactory sourceDirectorySetFactory) {
         final String displayName = String.format("%s Thrift source", parentDisplayName);
-        this.thrift = new DefaultSourceDirectorySet(displayName, fileResolver);
+        this.thrift = sourceDirectorySetFactory.create(displayName);
         this.thrift.getFilter().include(filters);
     }
 
