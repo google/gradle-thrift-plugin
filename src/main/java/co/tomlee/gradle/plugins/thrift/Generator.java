@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public final class Generator implements Serializable {
+
     private final String name;
     private final List<String> options = new ArrayList<>();
     private Object out;
@@ -51,9 +52,9 @@ public final class Generator implements Serializable {
     public boolean equals(final Object other) {
         if (other instanceof Generator) {
             final Generator otherGenerator = (Generator) other;
-            return name.equals(((Generator) other).name) &&
-                    options.equals(((Generator) other).options) &&
-                    Objects.equals(out, ((Generator) other).out);
+            return name.equals(((Generator) other).name)
+                    && options.equals(((Generator) other).options)
+                    && Objects.equals(out, ((Generator) other).out);
         }
         return false;
     }

@@ -14,6 +14,7 @@ import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
 public class ThriftTask extends SourceTask {
+
     private File thrift;
 
     private NamedDomainObjectContainer<Generator> generators = getProject().container(Generator.class);
@@ -44,8 +45,7 @@ public class ThriftTask extends SourceTask {
                     }
                 }
             });
-        }
-        else {
+        } else {
             inputFiles.addAll(getSource().getFiles());
         }
 
@@ -182,10 +182,14 @@ public class ThriftTask extends SourceTask {
             command.add("-I");
             command.add(include.getAbsolutePath());
         }
-        if (recurse) command.add("-recurse");
-        if (verbose) command.add("-verbose");
-        if (strict) command.add("-strict");
-        if (debug) command.add("-debug");
+        if (recurse)
+            command.add("-recurse");
+        if (verbose)
+            command.add("-verbose");
+        if (strict)
+            command.add("-strict");
+        if (debug)
+            command.add("-debug");
         command.add(fileName);
         return command;
     }
@@ -194,7 +198,7 @@ public class ThriftTask extends SourceTask {
         final StringBuilder sb = new StringBuilder();
         for (int i = 0; i < arg.size(); i++) {
             sb.append(arg.get(i));
-            if (i < arg.size()-1) {
+            if (i < arg.size() - 1) {
                 sb.append(sep);
             }
         }
@@ -204,13 +208,13 @@ public class ThriftTask extends SourceTask {
     private File generatorOutputDirectory(final Generator generator) {
         if (generator.getOut() != null) {
             return getProject().file(generator.getOut());
-        }
-        else {
+        } else {
             return this.out;
         }
     }
 
     private final class SlurpThread extends Thread {
+
         private final CountDownLatch latch;
         private final InputStream in;
         private final PrintStream out;
@@ -227,7 +231,7 @@ public class ThriftTask extends SourceTask {
             try {
                 final InputStreamReader reader = new InputStreamReader(in);
                 final char[] buf = new char[8 * 1024];
-                for (; ; ) {
+                for (;;) {
                     try {
                         if (reader.read(buf) <= 0) {
                             break;
@@ -238,8 +242,7 @@ public class ThriftTask extends SourceTask {
                         break;
                     }
                 }
-            }
-            finally {
+            } finally {
                 latch.countDown();
             }
         }
