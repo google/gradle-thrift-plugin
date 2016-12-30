@@ -1,13 +1,14 @@
 buildscript {
-    repositories {
+	repositories {
 		mavenLocal()
-        mavenCentral()
+		mavenCentral()
 		jcenter()
-    }
+		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+	}
 
-    dependencies {
-        classpath 'org.anarres.gradle:gradle-stdproject-plugin:1.0.7'
-    }
+	dependencies {
+		classpath 'org.anarres.gradle:gradle-stdproject-plugin:1.0.8-SNAPSHOT'
+	}
 }
 
 apply plugin: 'org.anarres.stdplugin'
@@ -28,6 +29,7 @@ targetCompatibility = '1.7'
 
 dependencies {
 	compile 'com.google.code.findbugs:annotations:3.0.1'
+	testCompile 'com.google.guava:guava:20.0'
 }
 
 animalsniffer {
