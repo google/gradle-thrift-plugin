@@ -1,75 +1,35 @@
-// vim: ft=groovy:sw=4:ts=4:expandtab
-
-apply plugin: 'maven'
-apply plugin: 'idea'
-apply plugin: 'java'
-apply plugin: 'nexus'
-apply plugin: 'release'
-
-group = 'co.tomlee.gradle.plugins'
-
-sourceCompatibility = '1.7'
-targetCompatibility = '1.7'
-
 buildscript {
     repositories {
+		mavenLocal()
         mavenCentral()
-        jcenter()
+		jcenter()
     }
 
     dependencies {
-        classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7.1'
-        classpath 'co.tomlee.gradle.plugins:gradle-release-plugin:0.0.5'
+        classpath 'org.anarres.gradle:gradle-stdproject-plugin:1.0.6'
     }
 }
 
-jar {
-    manifest {
-        attributes 'Implementation-Title': 'gradle-thrift-plugin',
-                    'Implementation-Version': version
-    }
+apply plugin: 'org.anarres.stdplugin'
+
+stdmodule {
+	author id: 'thomaslee', name: 'Tom Lee', email: 'github@tomlee.co'
+	author id: 'shevek', name: 'Shevek', email: 'github@anarres.org'
+	license 'MIT'
 }
 
-repositories {
-    mavenCentral()
+stdplugin {
+	implementation "org.anarres.thrift", "co.tomlee.gradle.plugins.thrift.ThriftPlugin"
 }
+
+group = 'org.anarres.gradle'
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
 
 dependencies {
-    compile gradleApi()
+	compile 'com.google.code.findbugs:annotations:3.0.1'
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.12'
+animalsniffer {
+	skip = true
 }
-
-modifyPom {
-    project {
-        name('gradle-thrift-plugin')
-        description('gradle-thrift-plugin')
-        url('http://github.com/thomaslee/gradle-thrift-plugin')
-        scm {
-            connection('scm:git://github.com/thomaslee/gradle-thrift-plugin')
-            developerConnection('scm:git@github.com:thomaslee/gradle-thrift-plugin')
-            url('http://github.com/thomaslee/gradle-thrift-plugin')
-        }
-        developers {
-            developer {
-                id('thomaslee')
-                name('Tom Lee')
-                email('github@tomlee.co')
-            }
-        }
-        licenses {
-            license {
-                name 'The MIT License (MIT)'
-                url 'http://opensource.org/licenses/MIT'
-                distribution' repo'
-            }
-        }
-    }
-}
-
-nexus {
-    sign = true
-}
-

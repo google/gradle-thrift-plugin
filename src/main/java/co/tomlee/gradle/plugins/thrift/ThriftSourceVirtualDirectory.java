@@ -1,9 +1,13 @@
 package co.tomlee.gradle.plugins.thrift;
 
 import groovy.lang.Closure;
+import javax.annotation.Nonnull;
 import org.gradle.api.file.SourceDirectorySet;
 
 public interface ThriftSourceVirtualDirectory {
-    SourceDirectorySet getThrift();
-    ThriftSourceVirtualDirectory thrift(Closure closure);
+
+    @Nonnull
+    public SourceDirectorySet getThrift();
+
+    public ThriftSourceVirtualDirectory thrift(Closure closure);
 }
