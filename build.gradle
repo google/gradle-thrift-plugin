@@ -6,7 +6,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.anarres.gradle:gradle-stdproject-plugin:1.0.6'
+        classpath 'org.anarres.gradle:gradle-stdproject-plugin:1.0.7'
     }
 }
 
