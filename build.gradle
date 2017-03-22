@@ -14,6 +14,7 @@ buildscript {
 apply plugin: 'org.anarres.stdplugin'
 
 stdmodule {
+	description "A Gradle plugin for the Thrift IDL compiler."
 	author id: 'thomaslee', name: 'Tom Lee', email: 'github@tomlee.co'
 	author id: 'shevek', name: 'Shevek', email: 'github@anarres.org'
 	license 'MIT'

@@ -17,7 +17,7 @@ public class ThriftTask extends SourceTask {
 
     private File thrift;
 
-    private NamedDomainObjectContainer<Generator> generators = getProject().container(Generator.class);
+    private final NamedDomainObjectContainer<Generator> generators = getProject().container(Generator.class);
 
     private final ArrayList<File> include = new ArrayList<>();
 
@@ -99,6 +99,7 @@ public class ThriftTask extends SourceTask {
     }
 
     @InputFiles
+    @SkipWhenEmpty
     public SourceDirectorySet getSource() {
         return source;
     }
