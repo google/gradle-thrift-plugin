@@ -37,7 +37,9 @@ public class ThriftPluginApplyTest {
                 A("2.12"),
                 A("2.14"),
                 A("3.0"),
-                A("3.2.1")
+                A("3.2.1"),
+                A("4.10.3"),
+                A("5.6")
         );
     }
 

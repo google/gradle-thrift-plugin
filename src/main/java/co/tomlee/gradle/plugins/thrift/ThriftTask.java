@@ -68,7 +68,7 @@ public class ThriftTask extends SourceTask {
                     new SlurpThread(latch, p.getErrorStream(), System.err).start();
 
                     if (p.waitFor() != 0) {
-                        throw new GradleException(executable() + " command failed");
+                        throw new GradleException(getExecutable() + " command failed");
                     }
                     latch.await();
                 } catch (GradleException e) {
@@ -135,7 +135,7 @@ public class ThriftTask extends SourceTask {
     }
 
     @Input
-    public String executable() {
+    public String getExecutable() {
         return this.thrift != null ? this.thrift.getAbsolutePath() : "thrift";
     }
 
@@ -172,7 +172,7 @@ public class ThriftTask extends SourceTask {
     }
 
     public List<String> buildCommand(final Generator generator, File out, String fileName) {
-        final String thrift = executable();
+        final String thrift = getExecutable();
         final List<String> command = new ArrayList<>(Arrays.asList(thrift, "-out", out.getAbsolutePath()));
         final List<String> options = generator.getOptions();
         final String arguments = options.isEmpty() ? "" : ":" + join(",", options);
