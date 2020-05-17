@@ -34,12 +34,14 @@ public class ThriftPluginApplyTest {
     @Parameterized.Parameters(name = "{0}")
     public static List<Object[]> parameters() throws Exception {
         return Arrays.asList(
-                A("2.12"),
-                A("2.14"),
-                A("3.0"),
-                A("3.2.1"),
-                A("4.10.3"),
-                A("5.6")
+                // A("2.12"),   // No longer works.
+                // A("2.14"),
+                // A("3.0"),
+                // A("3.2.1"),  // No longer works.
+                // A("4.10.3"), // No longer works.
+                A("5.6"),
+                A("6.1.1"),
+                A("6.4.1")
         );
     }
 

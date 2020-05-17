@@ -12,15 +12,15 @@ import org.gradle.api.tasks.SourceSet;
 
 import javax.inject.Inject;
 import java.io.File;
-import org.gradle.api.internal.file.SourceDirectorySetFactory;
+import org.gradle.api.model.ObjectFactory;
 
 public class ThriftPlugin implements Plugin<Project> {
 
-    private final SourceDirectorySetFactory sourceDirectorySetFactory;
+    private final ObjectFactory objectFactory;
 
     @Inject
-    public ThriftPlugin(final SourceDirectorySetFactory sourceDirectorySetFactory) {
-        this.sourceDirectorySetFactory = sourceDirectorySetFactory;
+    public ThriftPlugin(final ObjectFactory objectFactory) {
+        this.objectFactory = objectFactory;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class ThriftPlugin implements Plugin<Project> {
                 // 1. Add a new 'thrift' virtual directory mapping
                 //
                 final ThriftSourceVirtualDirectoryImpl thriftSourceSet
-                        = new ThriftSourceVirtualDirectoryImpl(((DefaultSourceSet) sourceSet).getDisplayName(), sourceDirectorySetFactory);
+                        = new ThriftSourceVirtualDirectoryImpl(((DefaultSourceSet) sourceSet).getDisplayName(), objectFactory);
                 new DslObject(sourceSet).getConvention().getPlugins().put("thrift", thriftSourceSet);
                 final String srcDir = String.format("src/%s/thrift", sourceSet.getName());
                 thriftSourceSet.getThrift().srcDir(srcDir);

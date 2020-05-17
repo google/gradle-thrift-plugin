@@ -12,6 +12,7 @@ import org.gradle.api.tasks.incremental.InputFileDetails;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
+import org.gradle.api.file.FileTree;
 
 public class ThriftTask extends SourceTask {
 
@@ -94,14 +95,24 @@ public class ThriftTask extends SourceTask {
         return files;
     }
 
-    public void setSource(final SourceDirectorySet sourceDirectorySet) {
-        this.source = sourceDirectorySet;
-    }
-
     @InputFiles
     @SkipWhenEmpty
+    @Override
+    @PathSensitive(value = PathSensitivity.RELATIVE)
     public SourceDirectorySet getSource() {
         return source;
+    }
+
+    @Override
+    public void setSource(Object source) {
+        super.setSource(source);
+        if (source instanceof SourceDirectorySet)
+            this.source = (SourceDirectorySet) source;
+    }
+
+    @Override
+    public void setSource(FileTree source) {
+        setSource((Object) source);
     }
 
     @Input
@@ -228,6 +239,7 @@ public class ThriftTask extends SourceTask {
             this.out = out;
         }
 
+        @Override
         public void run() {
             try {
                 final InputStreamReader reader = new InputStreamReader(in);
