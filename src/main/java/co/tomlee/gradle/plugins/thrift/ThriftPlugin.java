@@ -1,3 +1,18 @@
+/*
+ * Copyright 2023 Google LLC
+ *
+ * Licensed under the MIT License (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://opensource.org/licenses/MIT
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package co.tomlee.gradle.plugins.thrift;
 
 import org.gradle.api.Action;
@@ -6,6 +21,7 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.internal.plugins.DslObject;
 import org.gradle.api.internal.tasks.DefaultSourceSet;
+import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.tasks.SourceSet;
@@ -25,7 +41,7 @@ public class ThriftPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        project.getPlugins().apply(JavaPlugin.class);
+        project.getPlugins().apply(JavaLibraryPlugin.class);
 
         configureConfigurations(project);
         configureSourceSets(project);
@@ -33,7 +49,7 @@ public class ThriftPlugin implements Plugin<Project> {
 
     private void configureConfigurations(final Project project) {
         final Configuration thriftConfiguration = project.getConfigurations().create("thrift").setVisible(false);
-        project.getConfigurations().getByName(JavaPlugin.COMPILE_CONFIGURATION_NAME).extendsFrom(thriftConfiguration);
+        project.getConfigurations().getByName(JavaPlugin.API_CONFIGURATION_NAME).extendsFrom(thriftConfiguration);
     }
 
     private void configureSourceSets(final Project project) {

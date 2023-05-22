@@ -1,35 +1,81 @@
 buildscript {
 	repositories {
-		mavenLocal()
-		mavenCentral()
-		jcenter()
 		gradlePluginPortal()
-		// maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 	}
-
 	dependencies {
-		classpath 'org.anarres.gradle:gradle-stdproject-plugin:1.0.10'
+		classpath "com.diffplug.spotless:spotless-plugin-gradle:6.18.0"
 	}
 }
 
-apply plugin: 'org.anarres.stdplugin'
-
-stdmodule {
-	description "A Gradle plugin for the Thrift IDL compiler."
-	author id: 'thomaslee', name: 'Tom Lee', email: 'github@tomlee.co'
-	author id: 'shevek', name: 'Shevek', email: 'github@anarres.org'
-	license 'MIT'
+repositories {
+	mavenCentral()
 }
 
-stdplugin {
-	implementation "org.anarres.thrift", "co.tomlee.gradle.plugins.thrift.ThriftPlugin"
-}
+apply plugin: 'java-gradle-plugin'
+apply plugin: 'maven-publish'
+apply plugin: 'com.diffplug.spotless'
 
-group = 'org.anarres.gradle'
+group = 'com.google.gradle'
 sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
 
 dependencies {
-	compile 'com.google.code.findbugs:annotations:3.0.1'
-	testCompile 'com.google.guava:guava:20.0'
+	api gradleApi()
+	implementation 'com.google.code.findbugs:annotations:3.0.1'
+	testImplementation 'com.google.guava:guava:20.0'
+	testImplementation 'junit:junit:4.13.2'
+}
+
+gradlePlugin {
+	plugins {
+		thrift {
+			id = 'com.google.gradle.thrift'
+			implementationClass = 'co.tomlee.gradle.plugins.thrift.ThriftPlugin'
+		}
+	}
+}
+
+spotless {
+	java {
+		licenseHeaderFile 'codequality/HEADER.java'
+		trimTrailingWhitespace()
+	}
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			from components.java
+			pom {
+				name = 'gradle-thrift-plugin'
+				description = "A Gradle plugin for the Thrift IDL compiler."
+				licenses {
+					license {
+						name = 'MIT'
+						url = 'https://spdx.org/licenses/MIT.html'
+					}
+				}
+				developers {
+					developer {
+						id = 'thomaslee'
+						name = 'Tom Lee'
+						email = 'github@tomlee.co'
+					}
+					developer {
+						id = 'shevek'
+						name = 'Shevek'
+						email = 'github@anarres.org'
+					}
+					developer {
+						id = 'shevek-google'
+						name = 'Shevek'
+						email = 'shevek@google.com'
+					}
+				}
+			}
+		}
+	}
+	publications.each { publication ->
+		println publication
+	}
 }
